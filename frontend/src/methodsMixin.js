@@ -172,6 +172,89 @@ export var methodsMixin = {
                 })
         },
 
+        addOrRemoveFromBookmarks(tweetId,add){
+            this.$store.state.isLoading = true
+            http.post('/addorremovefrombookmarks',{
+              username:localStorage.getItem('userId'),
+              tweetId,
+              add
+          })
+              .then(result => {
+                  console.log(result.data)
+                  if(add){
+                      this.$store.state.currentUser.bookmarks.unshift(tweetId)
+                  }
+                  else{
+                      this.$store.state.currentUser.bookmarks.splice(this.$store.state.currentUser.bookmarks.indexOf(tweetId),1)
+                      this.$router.go(0)
+                      // this.$store.state.bookmarks.splice(this.$store.state.currentUser.bookmarks.indexOf(tweetId),1)
+                  }
+                  this.$store.state.isLoading = false
+              })
+        },
+        likeOrUnlike(tweetId,like){
+            http.post("/likeorunlike",{
+                currentUserId: this.$store.state.currentUser._id,
+                tweetId,
+                like
+            })
+                .then(result => {
+                    console.log(result.data)
+                })
+            if(like){
+                this.$store.state.currentUser.likedTweets.push(tweetId)
+            }
+            else {
+                this.$store.state.currentUser.likedTweets.splice(this.$store.state.currentUser.likedTweets.indexOf(tweetId),1)
+            }
+        },
+        removeTweet(tweetId){
+            this.$store.state.isLoading = true
+            http.post('/removetweet',{
+              tweetId
+            })
+                .then(result => {
+                  console.log(result.data)
+                    this.$router.go(0)
+                })
+        },
+        getCurrentUser(){
+            this.$store.state.isLoading = true
+            http.post('/getuserwithoutdetail',{
+                        username:localStorage.getItem('userId')
+                    })
+                        .then(async (result) => {
+                            console.log("current user",result.data)
+                            this.$store.state.currentUser = await result.data
+                            this.$store.state.newInfos.name = this.$store.state.currentUser.name || ""
+                            this.$store.state.newInfos.mail = this.$store.state.currentUser.mail || ""
+                            this.$store.state.newInfos.bio = this.$store.state.currentUser.bio || ""
+                            this.$store.state.newInfos.location = this.$store.state.currentUser.location || ""
+                            this.$store.state.newInfos.website = this.$store.state.currentUser.website || ""
+                            this.$store.state.newInfos.bannerImage = this.$store.state.currentUser.bannerImage || "https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png"
+                            this.$store.state.newInfos.profileImage = this.$store.state.currentUser.profileImage || "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"
+                            this.$store.state.isLoading = false
+                        })
+        },
+        followOrUnfollow(follow){
+            http.post('/followorunfollow',{
+                currentUserId: this.$store.state.currentUser._id,
+                userIdToFollow: this.$store.state.userForProfile._id,
+                follow
+            })
+                .then(result => {
+                    console.log("follow or unfollow result: " + result.data)
+                })
+            if(follow){
+                this.$store.state.currentUser.following.push(this.$store.state.userForProfile._id)
+                this.$store.state.userForProfile.followers.push(this.$store.state.currentUser._id)
+            }
+            else{
+                this.$store.state.currentUser.following.splice(this.$store.state.currentUser.following.indexOf(this.$store.state.userForProfile._id),1)
+                this.$store.state.userForProfile.followers.splice(this.$store.state.userForProfile.followers.indexOf(this.$store.state.currentUser._id),1)
+            }
+        },
+
 
 
 
