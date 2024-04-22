@@ -208,16 +208,19 @@ export var methodsMixin = {
                 this.$store.state.currentUser.likedTweets.splice(this.$store.state.currentUser.likedTweets.indexOf(tweetId),1)
             }
         },
-        removeTweet(tweetId){
-            this.$store.state.isLoading = true
-            http.post('/removetweet',{
+        removeTweet(tweetId) {
+            this.$store.state.isLoading = true;
+            http.post('/removetweet', {
               tweetId
             })
-                .then(result => {
-                  console.log(result.data)
-                    this.$router.go(0)
-                })
-        },
+            .then(result => {
+              console.log(result.data);
+              window.location.reload(); // Reload the page
+            })
+            .catch(error => {
+              console.error('Error deleting tweet:', error);
+            });
+          },
         getCurrentUser(){
             this.$store.state.isLoading = true
             http.post('/getuserwithoutdetail',{

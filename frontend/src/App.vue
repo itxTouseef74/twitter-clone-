@@ -51,7 +51,7 @@ import MiniUserProfile from "@/components/MiniUserProfile";
 import AddTweetPopup from "@/components/AddTweetPopup";
 import ActionButton from "@/components/ActionButton";
 import EditProfilePopup from "@/components/EditProfilePopup";
-// import Loader from "@/components/Loader";
+import Loader from "@/components/Loader";
 // import axios from "axios";
 
 export default {
@@ -62,7 +62,7 @@ export default {
     AddTweetPopup,
     ActionButton,
     EditProfilePopup,
-    // Loader
+    Loader
 },
   methods:{
     searchInputFocusEvent(){

@@ -20,13 +20,13 @@ export default {
     }
   },
   methods:{
-    handleAction(){
-      try{
-        this[this.action]("deneme parametr action button component")
-      }catch (e){
-        console.log(`Error in ActionButton components 'handleAction' method:\n ${e}`)
-      }
+    handleAction() {
+    if (!this.action) {
+      console.error('No action specified.');
+      return;
     }
+    // Rest of the method...
+  }
   }
 }
 </script>

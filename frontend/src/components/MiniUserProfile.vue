@@ -3,16 +3,17 @@
     <img :src="imgSrc" alt="">
     <div class="profile-section2">
 
+
       <div class="name-and-follow-btn">
 
-        <span class="name-and-username">
+      <span class="name-and-username">
           <span class="name">{{ name }}</span>
           <span class="username">{{ username }}</span>
         </span>
 
         <span class="follow-btn"><TwitterButton class="flw-btn" w="75px" h="30px" br="15px" text="Follow" bgType="white"></TwitterButton></span>
 
-      </div>
+    </div>
 
       <span class="text" v-if="text">{{ text }}</span>
 

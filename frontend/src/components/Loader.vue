@@ -1,11 +1,11 @@
 <template>
-  <!-- <div class="loader-root">
+  <div class="loader-root">
     <div class="loader">
       <div class="bar"></div>
       <div class="bar"></div>
       <div class="bar"></div>
     </div>
-  </div> -->
+  </div>
 </template>
 
 <script>
